@@ -39,7 +39,7 @@ The distribution of the Yeo-Johnson transformed z-values also appear normal.
   
 The statistical moments for the Yeo-Transformed data and non-transformed (row) errors show the skew of the transformed data are much closer to normal than the non-transformed (raw) errors.
   
-<center>
+
   
 ```python
 dataset     Yeo Johnson Errors           Errors (raw)
@@ -52,7 +52,7 @@ May         1.02   0.07  3.2e+09 -19378  2.437  0.86  3.0e+09  -11536
 Jun         0.40  -0.16  1.7e+09  -3966  0.784 -0.92  2.0e+09  -12245
 Jul         0.91  -0.16  4.0e+08   -127  3.337 -1.87  7.6e+08   -8735
 ```
-</center>
+
   
 Based on this demonstration of the data transformed errors, we can assume the errors are normally transformed using the YJ Transform.
   
@@ -70,7 +70,7 @@ Based on this demonstration of the data transformed errors, we can assume the er
   
 3. Convert the random numbers to z-scores using the inverse normal approximation algorithm described below.
   
-<center>
+
   
     ```python
     #Get z-score from random variable
@@ -92,7 +92,7 @@ Based on this demonstration of the data transformed errors, we can assume the er
         den = ((d[2] * t + d[1]) * t + d[0]) * t + 1.0
         z = (t - (num/den))
     ```
-</center>
+
   
 We now have a sequence of uncorrelated z-scores described by:
   
