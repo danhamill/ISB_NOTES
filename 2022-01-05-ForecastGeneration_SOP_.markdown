@@ -9,35 +9,35 @@ The goal of this document is to describe how the Forecasts are generated for the
   
 </center>
   
-The forecast for a water year (<img src="https://latex.codecogs.com/gif.latex?wy"/>) is described as the summation of the remaining volume forecasts for the <img src="https://latex.codecogs.com/gif.latex?t"/> periods Feb-Jul (FJ), Mar-Jul (MJ), Apr-Jul (AJ), and May-Jul (MJ).
+The forecast for a water year (<img src="https://latex.codecogs.com/gif.latex?wy"/>) is described as a sequence April-to-July (AJ) runoff projections for the calendar months (<img src="https://latex.codecogs.com/gif.latex?t"/>), February (<img src="https://latex.codecogs.com/gif.latex?FebJ"/>), March (<img src="https://latex.codecogs.com/gif.latex?MarJ"/>), April (<img src="https://latex.codecogs.com/gif.latex?AprJ"/>), May (<img src="https://latex.codecogs.com/gif.latex?MayJ"/>).  We will denote each AJ
   
-<p align="center"><img src="https://latex.codecogs.com/gif.latex?F_{wy,t}%20=%20F_{wy,FJ}%20+%20F_{wy,%20MJ}%20+%20F_{wy,%20AJ}%20+%20F_{wy,%20MJ}."/></p>  
+<p align="center"><img src="https://latex.codecogs.com/gif.latex?F_{wy,t}%20=%20[F_{wy,FebJ},%20%20F_{wy,%20MarJ},%20F_{wy,%20AprJ},%20F_{wy,%20MayJ}]"/></p>  
   
   
-We need to analyze the residuals (errors) between historical forecasts <img src="https://latex.codecogs.com/gif.latex?F_{wy,%20t}"/> and observed inflows <img src="https://latex.codecogs.com/gif.latex?Obs_{wy,t}"/>.  
+The difference between the forecasted runoff volumes <img src="https://latex.codecogs.com/gif.latex?F_{wy,%20t}"/> and the observed runoff volume (<img src="https://latex.codecogs.com/gif.latex?Obs_{wy,t}"/>) provides an estimate of forecast error (<img src="https://latex.codecogs.com/gif.latex?E_{wy,%20t}"/>). We need to analyze the residuals (errors) between historical forecasts  and observed inflows <img src="https://latex.codecogs.com/gif.latex?Obs_{wy,t}"/>.  
   
-<p align="center"><img src="https://latex.codecogs.com/gif.latex?E_{wy,%20t}%20=%20F_{wy,%20t}%20-%20Obs_{wy,t}"/></p>  
+<p align="center"><img src="https://latex.codecogs.com/gif.latex?E_{wy,%20t}%20=%20F_{wy,%20t}%20-%20Obs_{wy,t}"/></p> 
   
   
 ##  Data Transformation
   
   
- A historical analysis of the remaining-volume forecast errors (<img src="https://latex.codecogs.com/gif.latex?E_{wy,%20t}"/>) found the errors have a mild negative skew. The distributions of the z-scores of the untransformed (raw) month-AJ forecast errors is shown below.
+A historical analysis of the AJ runoff volume forecast errors (<img src="https://latex.codecogs.com/gif.latex?E_{wy,%20t}"/>) found the errors have a mild negative skew. The distributions of the z-scores of the untransformed (raw) AJ volume errors is shown below.
   
 ![](Figures/normalized_error_bar.png)
   
-From a computation perspective, it is desirable to model the errors as normally distributed. The [Yeo-Johnson power transformation](https://en.wikipedia.org/wiki/Power_transform#Yeo%E2%80%93Johnson_transformation ) was evaluated to determine if the normal assumption could be used in this forecast generation model. An example probability plot of the untransformed (raw) and Yeo-Johnson transformed forecast errors for Feb AJ.  The Yeo-Johnson transformed values more closely follow the line of perfect agreement.
+From a computation perspective, it is desirable to model the errors as normally distributed. The [Yeo-Johnson power transformation](https://en.wikipedia.org/wiki/Power_transform#Yeo%E2%80%93Johnson_transformation ) was evaluated to determine if the normal assumption could be used in this forecast generation model. An example probability plot of the untransformed (raw) and Yeo-Johnson transformed forecast errors for Feb AJ.  The Yeo-Johnson transformed values more closely follow the line of perfect agreement with a theoretical normal distribution.
   
 ![](Figures/Feb_Yeo_probplot.png )
   
-The remaining probability plots for Mar-AJ, Apr-AJ, May-AJ all show similar results where the Yeo-Johnson transformed values closely follow the line of perfect agreement.
+The remaining probability plots for Mar-AJ, Apr-AJ, May-AJ all show similar results where the Yeo-Johnson transformed values closely follow the line of perfect agreementwith a theoretical normal distribution.
   
 The distribution of the Yeo-Johnson transformed z-values also appear normal.
   
-![](Figures/data_transform_plots/normalized_yeoZ_density.png )
+![](Figures/normalized_yeoZ_density.png )
   
   
-The statistical moments for the Yeo-Transformed data and non-transformed (row) errors show the skew of the transformed data are much closer to normal than the non-transformed (raw) errors.
+The statistical moments for the Yeo-Transformed data and non-transformed (row) runoff volume errors show the skew of the transformed data are much closer to normal than the non-transformed (raw) errors.
   
 
   
