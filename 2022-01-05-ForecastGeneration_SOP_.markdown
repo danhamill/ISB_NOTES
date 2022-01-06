@@ -22,15 +22,15 @@ We need to analyze the residuals (errors) between historical forecasts <img src=
 ##  Data Transformation
   
   
- A historical analysis of the remaining-volume forecast errors (<img src="https://latex.codecogs.com/gif.latex?E_{wy,%20t}"/>) found the errors have a mild negative skew. The distributions of the z-scores of the untransformed (raw) remaining volume errors is shown below.
+ A historical analysis of the remaining-volume forecast errors (<img src="https://latex.codecogs.com/gif.latex?E_{wy,%20t}"/>) found the errors have a mild negative skew. The distributions of the z-scores of the untransformed (raw) month-AJ forecast errors is shown below.
   
 ![](Figures/normalized_error_bar.png)
   
-From a computation perspective, it is desirable to model the errors as normally distributed. The [Yeo-Johnson power transformation](https://en.wikipedia.org/wiki/Power_transform#Yeo%E2%80%93Johnson_transformation ) was evaluated to determine if the normal assumption could be used in this forecast generation model. An example probability plot of the untransformed (raw) and Yeo-Johnson transformed forecast errors for the Feb AJ remaining.  The Yeo-Johnson transformed values more closely follow the line of perfect agreement.
+From a computation perspective, it is desirable to model the errors as normally distributed. The [Yeo-Johnson power transformation](https://en.wikipedia.org/wiki/Power_transform#Yeo%E2%80%93Johnson_transformation ) was evaluated to determine if the normal assumption could be used in this forecast generation model. An example probability plot of the untransformed (raw) and Yeo-Johnson transformed forecast errors for Feb AJ.  The Yeo-Johnson transformed values more closely follow the line of perfect agreement.
   
 ![](Figures/Feb_Yeo_probplot.png )
   
-The remaining probability plots for Mar-July, Apr-July, May-July all show similar results where the Yeo-Johnson transformed values closely follow the line of perfect agreement.
+The remaining probability plots for Mar-AJ, Apr-AJ, May-AJ all show similar results where the Yeo-Johnson transformed values closely follow the line of perfect agreement.
   
 The distribution of the Yeo-Johnson transformed z-values also appear normal.
   
@@ -132,18 +132,18 @@ Based on this demonstration of the data transformed errors, we can assume the er
   
     The Yeo-Johnson transformation varies by <img src="https://latex.codecogs.com/gif.latex?&#x5C;lambda"/> and is described below:
     
-    <center>
+    
     
     ```python
     y = ((x + 1)**lmbda - 1) / lmbda,                for x >= 0, lmbda != 0
         -((-x + 1)**(2 - lmbda) - 1) / (2 - lmbda),  for x < 0, lmbda != 2
     ```
-    
+                                                               
 
     
     The fitted <img src="https://latex.codecogs.com/gif.latex?&#x5C;lambda"/> values shown below.  
     
-    <center>
+    <p align="center">
     
     Month| Yeo Johnson <img src="https://latex.codecogs.com/gif.latex?&#x5C;lambda"/>  |
     -----|--------  |
@@ -151,7 +151,7 @@ Based on this demonstration of the data transformed errors, we can assume the er
     Mar  |  1.0511  |
     Apr  |  1.0223  |
     May  |  0.9808  |
-    
+  </p>
 
   
 6. Convert the reverse transformed z-scores to to errors using
