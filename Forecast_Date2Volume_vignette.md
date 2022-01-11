@@ -3,7 +3,7 @@ Daniel Hamill
 10 January 2022
 
 ## Isabella Forecast Structure
-The structure of the "official" Isabella forecasts analzed in this analysis is shown below. The historical forcasts from WY 29176 to WY 2020 were analyzed here.
+The structure of the "official" Isabella forecasts analzed in this analysis is shown below. The historical forcasts from WY 1976 to WY 2020 were analyzed here.
   
 <center>
   
@@ -12,24 +12,28 @@ The structure of the "official" Isabella forecasts analzed in this analysis is s
   
 </center>
   
-The forecast for a water year ($wy$) is described as a sequence month-to-July runoff projections for the calendar months ($t$), February ($FebJ$), March ($MarJ$), April ($AprJ$), and May ($MayJ$). The forecast window gets sucessivly smaller. A $FebJ$ forcast has a 5-month forecast window (February - July), whereas a $MarJ$ forcast window has a 4-month forecast window (March to July).
+The forecast for a water year (<!-- $wy$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=wy">) is described as a sequence month-to-July runoff projections for the calendar months ($t$), February (<!-- $FebJ$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=FebJ">), March ($MarJ$), April (<!-- $AprJ$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=AprJ">), and May (<!-- $MayJ$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=MayJ">). The forecast window gets sucessivly smaller. A <!-- $FebJ$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=FebJ"> forcast has a 5-month forecast window (February - July), whereas a $MarJ$ forcast window has a 4-month forecast window (March to July).
 
-$$
+<!-- $$
 F_{wy,t} = [F_{wy,FebJ},  F_{wy, MarJ}, F_{wy, AprJ}, F_{wy, MayJ}]
-$$
+$$ --> 
 
-The difference between the forecasted runoff volumes $F_{wy, t}$ and the observed runoff volume ($Obs_{wy,t}$) provides an estimate of forecast error ($E_{wy, t}$). 
+<div align="center"><img style="background: white;" src="https://render.githubusercontent.com/render/math?math=F_%7Bwy%2Ct%7D%20%3D%20%5BF_%7Bwy%2CFebJ%7D%2C%20%20F_%7Bwy%2C%20MarJ%7D%2C%20F_%7Bwy%2C%20AprJ%7D%2C%20F_%7Bwy%2C%20MayJ%7D%5D%0D"></div>
 
-$$
+The difference between the forecasted runoff volumes <!-- $F_{wy, t}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=F_%7Bwy%2C%20t%7D"> and the observed runoff volume (<!-- $Obs_{wy,t}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=Obs_%7Bwy%2Ct%7D">) provides an estimate of forecast error (<!-- $E_{wy, t}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=E_%7Bwy%2C%20t%7D">). 
+
+<!-- $$
 E_{wy, t} = F_{wy, t} - Obs_{wy,t}
-$$
+$$ --> 
+
+<div align="center"><img style="background: white;" src="https://render.githubusercontent.com/render/math?math=E_%7Bwy%2C%20t%7D%20%3D%20F_%7Bwy%2C%20t%7D%20-%20Obs_%7Bwy%2Ct%7D%0D"></div>
   
 ##  Data Transformation
 
 In this section we describe the data analysis required to model the forcasts at Isabells for synthetic events.
 
 ### Forecasts
-A historical analysis of the month-to-July runoff volume forecast (<img src="https://latex.codecogs.com/gif.latex?F_{wy,%20t}"/>) found the errors have a positive skew. The distributions of the z-scores ($Z_{wy} = \frac{F_{wy,t} - \bar{F_t}}{\sigma_{F_t}}$) of the untransformed (raw) month-to-July runoff volumes is shown below:
+A historical analysis of the month-to-July runoff volume forecast (<img src="https://latex.codecogs.com/gif.latex?F_{wy,%20t}"/>) found the errors have a positive skew. The distributions of the z-scores (<!-- $Z_{wy} = \frac{F_{wy,t} - \bar{F_t}}{\sigma_{F_t}}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=Z_%7Bwy%7D%20%3D%20%5Cfrac%7BF_%7Bwy%2Ct%7D%20-%20%5Cbar%7BF_t%7D%7D%7B%5Csigma_%7BF_t%7D%7D">) of the untransformed (raw) month-to-July runoff volumes is shown below:
   
 <center>
 <img src="Figures/volume_normalized_error_bar.png"  width="1000" >
@@ -94,28 +98,34 @@ To simulate reservoir operatioins for Isabella Dam, the reservoir model requires
 
 The inflow hydrographs are developed using the hydrologic sampler are are considered inputs to the forecast generation procedure. The forcast generation model described here is developed following an [autoregressive lag-1 (AR1)](https://otexts.com/fpp2/AR.html) model described by:
 
-$$
-F_{wy,t} = V_t + \phi(F_{wy, t-1} - V_t) + \varepsilon \sim \mathcal{N}(0,\,\sigma^{2})\,
-$$
+<!-- $$
+F_{wy,t} = V_t + \phi(F_{wy, t-1} - V_t) + \varepsilon \sim \mathcal{N}(0,\,\sigma^{2}),
+$$ --> 
+
+<div align="center"><img style="background: white;" src="https://render.githubusercontent.com/render/math?math=F_%7Bwy%2Ct%7D%20%3D%20V_t%20%2B%20%5Cphi(F_%7Bwy%2C%20t-1%7D%20-%20V_t)%20%2B%20%5Cvarepsilon%20%5Csim%20%5Cmathcal%7BN%7D(0%2C%5C%2C%5Csigma%5E%7B2%7D)%2C%0D"></div>
 
 The first term of the AR1 model ($V_t$) is the starting point for the calculation and is calculated directly from the inflow hydrograph. The second term of the AR1 equation is called the peristance term where the difference between the forecast from the previous month and current is scaled by the model parameter $\phi$.  An estimate of $\phi$ for each month-to July forcast is calculated as the lag-1 autocorrelation the time series of successive forcasts:
 
-$$
+<!-- $$
 \hat{\phi} = Corr(F_{t}, F_{t-1})
-$$
+$$ --> 
+
+<div align="center"><img style="background: white;" src="https://render.githubusercontent.com/render/math?math=%5Chat%7B%5Cphi%7D%20%3D%20Corr(F_%7Bt%7D%2C%20F_%7Bt-1%7D)%0D"></div>
 
 Where 
-- $\hat{\phi}$ is a set of lag-1 correlation metrics for each month-to-July forcast window.
-- $F_{t}$ is the time series of all forcasts for the current forecast window.
-- $F_{t-1}$ is the time series of all forcasts from the previous forcast window.
+- <!-- $\hat{\phi}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Chat%7B%5Cphi%7D"> is a set of lag-1 correlation metrics for each month-to-July forcast window.
+- <!-- $F_{t}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=F_%7Bt%7D"> is the time series of all forcasts for the current forecast window.
+- <!-- $F_{t-1}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=F_%7Bt-1%7D"> is the time series of all forcasts from the previous forcast window.
 
 By definition $\phi$ ranges between -1 and 1.  A value close to 1 indicates successive forecasts are similar in magnitude, whereas a value close to  -1 indicates the magnitudes are not related and an AR1 model might not be the best model.
 
 The set of model parameters $\hat{\phi}$ can be thought as a set of sucssive lag-1 autocorrelation metrics.
 
-$$
+<!-- $$
 \hat{\phi} = [\phi_{FebJ}, \phi_{MarJ}, \phi_{AprJ}, \phi_{MayJ}]
-$$
+$$ --> 
+
+<div align="center"><img style="background: white;" src="https://render.githubusercontent.com/render/math?math=%5Chat%7B%5Cphi%7D%20%3D%20%5B%5Cphi_%7BFebJ%7D%2C%20%5Cphi_%7BMarJ%7D%2C%20%5Cphi_%7BAprJ%7D%2C%20%5Cphi_%7BMayJ%7D%5D%0D"></div>
 
 
 
