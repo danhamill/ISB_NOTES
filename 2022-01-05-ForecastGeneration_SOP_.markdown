@@ -117,7 +117,7 @@ Based on this demonstration of the data transformed errors, we can assume the er
     
     The term <img src="https://latex.codecogs.com/gif.latex?r"/> in the lag1 autocorrelation sequence is estimated using the historical set of forecast errors (1976-2020). The autocorrelation between successive forecasts within a water year represents a linear relationship between lagged observations. By definition a value <img src="https://latex.codecogs.com/gif.latex?r_1"/> is between -1 and 1.  A value close to 1 indicates successive error terms will have the same sign, whereas a value close to negative 1 indicates successive error terms will alternate in sign. <img src="https://latex.codecogs.com/gif.latex?&#x5C;hat{r_1}"/> describes the set of lag1 auto correlation numbers for each forecast year between 1976 and 2020.
     
-    <p align="center"><img src="https://latex.codecogs.com/gif.latex?&#x5C;hat{r_1}%20=%20Corr(Z_{wy,t},%20Z_{wy,t-1})"/></p>  
+    <p align="center"><img src="https://latex.codecogs.com/gif.latex?&#x5C;hat{r_1}%20=%20Corr(F_{wy,t},%20F_{wy,t-1})"/></p>  
     
     
     Finally <img src="https://latex.codecogs.com/gif.latex?r_1"/> is calculated as the average of <img src="https://latex.codecogs.com/gif.latex?&#x5C;hat{r_1}"/>
