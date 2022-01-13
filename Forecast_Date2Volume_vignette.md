@@ -1,40 +1,41 @@
-# Isabella WCM Update Forecast Generation Vignette
-Daniel Hamill
-10 January 2022
+---
+title: "Isabella WCM Update Forecast Generation Vignette"
+xnos-cleveref: True
+xnos-capitalise: True
+# fignos-capitalise: True
+xnos-caption-separator: space
+fignos-cleveref: True
+fignos-caption-separator: colon
+author: Daniel Hamill
+date: January 11, 2022
+output:
+    word_document:
+        toc: yes
+        toc_depth: 3
+        fig_caption: true
+        path: output/Isabella_Forecast_Generation_SOP.docx
+---
 
 ## Isabella Forecast Structure
-The structure of the "official" Isabella forecasts analyzed in this analysis is shown below. The historical forecasts from WY 1976 to WY 2020 were analyzed here.
+The structure of the "official" B120 forecasts for Isabella Lake is shown in @fig:fig1. The term "offical" is used to qualify the forecasts provided each water year beginning of each month from February through May.  There are "unoffical" forecasts that are issued mid-month or later in the snowmelt season if applicable for the water year (WY).  The B120 forecasts for Isabella lake phycically represent snowpack in the headwaters and are produced using a multiple linear regression model.  The city of Bakersfield has models for dry, normal, and wet water years. There has not been any significant changes in forcast methodology betweeen 1976 and present and are concidered having similar quality/accuracy.
 
-<center>
+![The Structure of B120 Forecasts for Isabella Dam ](Figures/Forecast_Structure.png){#fig:fig1}
 
-<!-- ![](Figures/Forecast_Structure.png ) -->
-<img src="Figures/Forecast_Structure.png"  width="1000" >
-
-</center>
-
-The forecast for a water year ($wy$) is described as a sequence month-to-July runoff projections for the calendar months ($t$), February ($FebJ$), March ($MarJ$), April ($AprJ$), and May ($MayJ$). The forecast window gets successively smaller. A $FebJ$ forecast has a 5-month forecast window (February - July), whereas a $MarJ$ forcast window has a 4-month forecast window (March to July).  The sequence of forecast volumes for a water year can be described as:
+The historical forecasts from WY 1976 to WY 2020 are included in this analysis.The forecast for a water year ($wy$) is described as a sequence month-to-July runoff projections for the calendar months ($t$), February ($FebJ$), March ($MarJ$), April ($AprJ$), and May ($MayJ$). The forecast window gets successively smaller. A $FebJ$ forecast has a 5-month forecast window (February - July), whereas a $MarJ$ forcast window has a 4-month forecast window (March to July).  The sequence of forecast volumes for a water year can be described in Equation @eq:eq1:
 
 $$
-F_{wy,t} = [F_{wy,FebJ},  F_{wy, MarJ}, F_{wy, AprJ}, F_{wy, MayJ}]
-$$
-
-The difference between the forecasted runoff volumes $F_{wy, t}$ and the observed runoff volume ($Obs_{wy,t}$) provides an estimate of forecast error ($E_{wy, t}$).
-
-$$
-E_{wy, t} = F_{wy, t} - Obs_{wy,t}
-$$
+F_{wy,t} = [F_{wy,FebJ},  F_{wy, MarJ}, F_{wy, AprJ}, F_{wy, MayJ}] 
+$${#eq:eq1}
 
 ##  Data Transformation
 
 In this section we describe the data analysis required to model the forecasts at Isabella for synthetic events.
 
 ### Forecasts
-A historical analysis of the month-to-July runoff volume forecast (<img src="https://latex.codecogs.com/gif.latex?F_{wy,%20t}"/>) found the errors have a positive skew. The distributions of the z-scores ($Z_{wy} = \frac{F_{wy,t} - \bar{F_t}}{\sigma_{F_t}}$) of the untransformed (raw) month-to-July runoff volumes is shown below:
+A historical analysis of the month-to-July runoff volume forecast ($F_{wy,t}$) found the errors have a positive skew. The distributions of the z-scores ($Z_{wy} = \frac{F_{wy,t} - \bar{F_t}}{\sigma_{F_t}}$) of the untransformed (raw) month-to-July runoff volumes is shown below:
 
+![Isabella month-to-July inflow distributions.](Figures/volume_normalized_error_bar.png )
 
-<center>
-<img src="Figures/volume_normalized_error_bar.png"  width="1000" >
-</center>
 
 From a computation perspective, it is desirable to model the forecast runoff volumes as normally distributed. The [Box Cox power transformation](https://en.wikipedia.org/wiki/Power_transform#Box%E2%80%93Cox_transformation) was evaluated to determine if the normal assumption could be used in this forecast generation model. The Box Cox transformation is a fitted model that varies by the model parameter $\lambda$.  The model was fitted for each month-to-July using value obtained from maximum log-likelihood algorithm encoded within the python library [scipy](https://docs.scipy.org/doc/scipy/reference/reference/generated/scipy.stats.boxcox.html).
 
@@ -52,14 +53,12 @@ From a computation perspective, it is desirable to model the forecast runoff vol
 
 |  <!-- -->    |  <!-- -->   |
 |:----:|:------------:|
-| <img src="Figures/Feb_volume_boxcox_probplot.png"  > | <img src="Figures/Mar_volume_boxcox_probplot.png"  >   |
-| <img src="Figures/Apr_volume_boxcox_probplot.png"  >|<img src="Figures/May_volume_boxcox_probplot.png"  >|
+| ![](Figures/Feb_volume_boxcox_probplot.png){ width=3in }| ![](Figures/Mar_volume_boxcox_probplot.png){ width=3in }|
+| ![](Figures/Apr_volume_boxcox_probplot.png){ width=3in }| ![](Figures/May_volume_boxcox_probplot.png){ width=3in }|
 
 The distribution of the Box Cox transformed z-values also appear more symmetrical (i.e. normal) than the untransformed (raw) runoff volumes shown above.
 
-<center>
-<img src="Figures/volume_normalized_boxcox_density.png"  width="1000" >
-</center>
+![](Figures/volume_normalized_boxcox_density.png)
 
 The statistical moments of the untransformed (raw) month-to-July and Box Cox transformed forecast runoff volumes are tabulated below.  
 
@@ -85,6 +84,39 @@ Notably, the Box Cox transformed data have skew values close to zero, which sugg
 |  | variance    |      6.072e+10 |
 |  | mean        | 323663           |
 
+### Errors
+
+The actual month-to-July inflows provide a way to quantify the accuracty of the B120 forecasts for Isabella lake.  The difference between the forecasted runoff volumes $F_{wy, t}$ and the observed runoff volume ($Obs_{wy,t}$) provides an estimate of forecast error ($E_{wy, t}$, Equation {@eq:eq2}).
+
+$$
+E_{wy, t} = F_{wy, t} - Obs_{wy,t}
+$${#eq:eq2}
+
+Below is a density plot showing the bimodal distribution of the month-to-July forecast errors.  The bimodal distribution is a result that some forecasts underpredict the actual ruoff volumes, while others can overpredict.
+
+![Disbturution of mont-to-July forecast volume errors.](Figures/error_density.png)
+
+A log-tranfrom of the month-to-July forecasat and actual volumes provides a way to normalize the volumes before the forecast error is calcualted. The difference between the log-transformed mont-to-July forecast volumes and log-transformed month-to-July actual volumes is termed $log\_error$ and their desntisy are shown below.
+
+![Distribution of month-to-July actual volume log-errors.](Figures/log_error_density.png)
+
+The statistical moments of the $log\_error$ data for each month-to-July forecast window are tabulated below.
+
+| month   |   mean |   variance |   skew |   kurtosis |   standard error |
+|:--------:|:-------:|:-----------:|:-------:|:-----------:|-----------------:|
+| Feb     | -0.068 |      0.219 | -0.084 |     -0.5   |            3.141 |
+| Mar     | -0.021 |      0.119 | -0.683 |      0.693 |            2.289 |
+| Apr     |  0.014 |      0.021 |  0.296 |      0.867 |            0.959 |
+| May     | -0.034 |      0.032 |  0.381 |      1.546 |            1.208 |
+|  Average | -0.0343 |  0.0943 |  0.097 |   0.446 |            1.929 |
+
+The probability plots comparing each of the month-to-July $log\_error$ is shown below:
+
+|  <!-- -->    |  <!-- -->   |
+|:----:|:------------:|
+| ![](Figures/Feb_log_error_probplot.png){ width=3in }| ![](Figures/Mar_log_error_probplot.png){ width=3in }|
+| ![](Figures/Apr_log_error_probplot.png){ width=3in }| ![](Figures/May_log_error_probplot.png){ width=3in }|
+
 ## Forecast Generation Procedure
 
 To simulate reservoir operations for Isabella Dam, the reservoir model requires the following inputs:
@@ -97,13 +129,13 @@ The inflow hydrographs are developed using the hydrologic sampler are considered
 
 $$
 F_{wy,t} = V_t + \phi(F_{wy, t-1} - V_t) + \varepsilon \sim \mathcal{N}(0,\,\sigma^{2})\,
-$$
+$${#eq:eq3}
 
 The first term of the AR1 model ($V_t$) is the starting point for the calculation and is calculated directly from the inflow hydrograph for the current month-to-July forecast window . The second term of the AR1 equation is called the persistence term where the difference between the forecast from the previous month and current is scaled by the model parameter $\phi$.  An estimate of $\phi$ for each month-to-July forecast is calculated as the lag-1 autocorrelation the time series of successive forecasts:
 
 $$
 \hat{\phi} = Corr(F_{t-1}, F_{t})
-$$
+$${#eq:eq4}
 
 Where
 - $\hat{\phi}$ is a set of lag-1 correlation metrics for each month-to-July forecast window.
@@ -125,6 +157,7 @@ The forecast generation procedure is completed in the following steps.
     $$
     random\_vals = [r_{init}, r_{FebJ}, r_{MarJ}, r_{AprJ}, r_{MayJ}]
     $$
+    
 3. Convert the generated random numbers from step 1 to inverse normal using the empirical algorithm. The values from this algorithm represent forecast volumes scales linearly by the $\sigma_t$ and $\mu_t$ (e.g. z-value).
 
     ```python
